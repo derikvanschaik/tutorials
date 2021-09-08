@@ -20,10 +20,11 @@ def main():
     window = sg.Window('draggable graph application', layout) 
     # global event variables 
     figs = {} #key will be pysimple gui, maps to dict with 'selected' property 
+    twin_tracker = {} # maps canvas objects to drag canvas objects and vice versa 
     while(True):
         event, values = window.read()
         if event == "CANV": 
-            click_location = values[event]
+            click_location = values[event] 
             # for else loop being used here 
             for figure in canvas.get_figures_at_location(click_location):
                 # user clicked on present object 
@@ -37,8 +38,11 @@ def main():
             else:
                 fig_id = canvas.draw_circle(click_location, radius = 5, fill_color = 'blue')
                 figs[fig_id] = {'selected': False}
-                # just some output text to let us know something is happening 
-                window['OUTPUT'].update(f"Just created figure {fig_id}")
+                # create figure to be drawn onto drag canvas 
+                drag_fig_id = drag_canvas.draw_circle(click_location, radius = 5, fill_color = 'blue')
+                # map figures to eachother 
+                twin_tracker[fig_id] = drag_fig_id
+                twin_tracker[drag_fig_id] = fig_id
 
         if event == "DRAG-CANV":
             # just some output text to let us know something is happening

@@ -14,10 +14,17 @@ def main():
         background_color='white',
         enable_events = True, drag_submits= True 
          )
+        
+    # wrap each canvas into a tab 
+    main_tab = sg.Tab("dragging off", [[canvas]]) 
+    drag_tab = sg.Tab("dragging on", [[drag_canvas]], visible=False) # dragging tab is invisible 
+    # create tab group 
+    tabs = sg.TabGroup([[main_tab, drag_tab]]) 
     # layout 
     output = sg.Text("", key="OUTPUT", size=(50, 1))    
-    layout = [[output], [canvas, drag_canvas],]
-    window = sg.Window('draggable graph application', layout)  
+    layout = [[output], [tabs]]
+    window = sg.Window('draggable graph application', layout)   
+     
     # global event variables 
     figs = {} #key will be pysimple gui, maps to dict with 'selected' property 
     twin_tracker = {} # maps canvas objects to drag canvas objects and vice versa
@@ -28,7 +35,7 @@ def main():
             # for else loop being used here 
             for figure in canvas.get_figures_at_location(click_location): 
                 # toggle selected property 
-                figs[figure]['selected'] = not figs[figure]['selected']
+                figs[figure]['selected'] = not figs[figure]['selected'] 
                 # just some output text to let us know something is happening 
                 window['OUTPUT'].update(f"figure {figure} selected = {figs[figure]['selected']}")
                 break  

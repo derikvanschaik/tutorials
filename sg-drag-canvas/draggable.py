@@ -19,18 +19,23 @@ def main():
     main_tab = sg.Tab("dragging off", [[canvas]]) 
     drag_tab = sg.Tab("dragging on", [[drag_canvas]], visible=False) # dragging tab is invisible 
     # create tab group 
-    tabs = sg.TabGroup([[main_tab, drag_tab]]) 
+    tabs = sg.TabGroup([[main_tab, drag_tab]])
+    # create drag mode toggler button 
+    # set metadata parameter to false. True -> in drag mode False -> not in drag mode 
+    mode_toggler = sg.Button("toggle drag mode", metadata=False ) 
     # layout 
     output = sg.Text("", key="OUTPUT", size=(50, 1))    
-    layout = [[output], [tabs]]
-    window = sg.Window('draggable graph application', layout)   
-     
+    layout = [[output, mode_toggler], [tabs]]
+    window = sg.Window('draggable graph application', layout)    
+
     # global event variables 
     figs = {} #key will be pysimple gui, maps to dict with 'selected' property 
-    twin_tracker = {} # maps canvas objects to drag canvas objects and vice versa
+    twin_tracker = {} # maps canvas objects to drag canvas objects and vice versa  
     while(True):
         event, values = window.read()
-        if event == "CANV": 
+        if event in(None, sg.WIN_CLOSED):  
+            break 
+        elif event == "CANV": 
             click_location = values[event] 
             # for else loop being used here 
             for figure in canvas.get_figures_at_location(click_location): 
@@ -49,7 +54,7 @@ def main():
                 twin_tracker[fig_id] = drag_fig_id
                 twin_tracker[drag_fig_id] = fig_id 
 
-        if event == "DRAG-CANV": 
+        elif event == "DRAG-CANV":  
             # drag location x and y 
             (x, y) = values[event]
             # threshold for fig drags (hotspot)
@@ -61,13 +66,19 @@ def main():
                     canvas.relocate_figure(fig_id, x, y) 
                     drag_canvas.relocate_figure( twin_tracker[fig_id], x, y) 
                     fig_obj['location'] = (x, y) # reset new location
-                    break  
+                    break 
+        
+        elif event == "toggle drag mode":
+            # toggle drag mode 
+            mode_toggler.metadata = not mode_toggler.metadata 
+            dragging = mode_toggler.metadata 
+            # toggle visibility properties of tabs -- only show one at a time 
+            window['dragging on'].update( visible = dragging) 
+            window['dragging off'].update( visible = not dragging)
+            # select original canvas if not in dragging mode. 
+            if not dragging:
+                      window['dragging off'].select()  
 
-
-             
-
-        if event in(None, sg.WIN_CLOSED):  
-            break 
 
     window.close() 
 if __name__ == "__main__":

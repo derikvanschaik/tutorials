@@ -1,0 +1,9 @@
+body {
+    max-width: 680px; 
+    margin: 0 auto;
+    font-family: sans-serif;
+}
+.blog-writing{
+    line-height: 21pt; 
+}
+

@@ -17,7 +17,7 @@ def main():
     # layout 
     output = sg.Text("", key="OUTPUT", size=(50, 1))    
     layout = [[output], [canvas, drag_canvas],]
-    window = sg.Window('draggable graph application', layout) 
+    window = sg.Window('draggable graph application', layout)  
     # global event variables 
     figs = {} #key will be pysimple gui, maps to dict with 'selected' property 
     twin_tracker = {} # maps canvas objects to drag canvas objects and vice versa
@@ -50,9 +50,9 @@ def main():
             for fig_id, fig_obj  in figs.items():
                 fig_x, fig_y = fig_obj['location']
                 # user is dragging this figure 
-                if (abs(x-fig_x) <= thresh and abs(y-fig_y) <= thresh):
-                    canvas.relocate_figure(fig_id, x, y)
-                    drag_canvas.relocate_figure( twin_tracker[fig_id], x, y)
+                if (abs(x-fig_x) <= thresh and abs(y-fig_y) <= thresh): 
+                    canvas.relocate_figure(fig_id, x, y) 
+                    drag_canvas.relocate_figure( twin_tracker[fig_id], x, y) 
                     fig_obj['location'] = (x, y) # reset new location
                     break  
 

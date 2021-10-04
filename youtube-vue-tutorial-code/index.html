@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+	    <meta charset="utf-8">
+	    <title>HTML5 boilerplate – all you really need…</title>
+
+	</head>
+
+	<body>
+		<div id="app">
+			<h1>Friends :)</h1>
+
+			<h4>{{selectedOutput}}</h4>
+			<button v-if="selectedCount > 0" @click="deleteSelected">Delete</button> 
+
+			<input type="text" v-model="newFriend">
+			<button @click="addFriend">Add Friend</button> 
+			<ul>
+				<li v-for="friend in friends">
+					<input type="checkbox" :checked="friend.selected" @click="toggleSelected(friend)">  
+					<p>{{friend.name}}</p>
+				</li> 
+			</ul> 
+		</div>
+
+	</body>
+
+</html>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	new Vue({
+	  el: '#app',
+	  data: {
+	  	newFriend: '', 
+	    friends: [], 
+	    selectedOutput: '',
+	    selectedCount: 0, 
+	  },
+	  watch: {
+	  	selectedCount(){ 
+	  		if (this.selectedCount === 0){
+	  			return this.selectedOutput = ''; 
+	  		}
+	  		this.selectedOutput = `Selected (${this.selectedCount})`; 
+	  	}
+	  }, 
+	  methods: {
+	  	addFriend(){
+	  		const newFriendObj = {name: this.newFriend, selected: false}; 
+	  		this.friends.push(newFriendObj);
+	  		this.newFriend = "";   
+	  	}, 
+	  	toggleSelected(friend){
+	  		friend.selected = !friend.selected;
+	  		let value; 
+	  		if(friend.selected){
+	  			value = 1; 
+	  		}else{
+	  			value = -1; 
+	  		}
+	  		this.selectedCount += value;
+
+	  	},
+	  	deleteSelected(){
+	  		const lengthBeforeDeletion = this.friends.length; 
+	  		this.friends = this.friends.filter(friendObj => !friendObj.selected);
+	  		const lengthAfterDeletion = this.friends.length; 
+	  		this.selectedCount += lengthAfterDeletion - lengthBeforeDeletion; 
+
+	  	}
+	  }
+	}); 
+</script>

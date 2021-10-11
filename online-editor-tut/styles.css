@@ -1,0 +1,44 @@
+body{
+    font-family: Arial, Helvetica, sans-serif; 
+    padding-left: 5%;
+    overflow-x: hidden;
+}
+.header{
+    margin: 0 auto;
+    text-align: center; 
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 60% 30%; 
+    grid-gap: 15px; 
+}
+.grid-child{
+    margin: 0 auto; 
+    border-radius: 1em;
+    width: 100%;
+    padding: 10px 5px 10px 2px; 
+    background-color: #F6F6F6;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.editor-header{
+    display: grid;
+    grid-template-columns: 80% 20%; 
+}
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px; 
+    margin-bottom: 10px; 
+}
+.button, #clear{
+    background-color: lightskyblue; 
+}
+.CodeMirror{
+    height: 500px; 
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="codemirror/codemirror-5.63.1/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror/codemirror-5.63.1/lib/codemirror.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="codemirror/codemirror-5.63.1/mode/javascript/javascript.js"></script> 
+    <script src="app.js"></script>
+    <title>Document</title> 
+</head>
+<body>
+    <header class = "header"> 
+        <h1>Online Javascript Editor</h1>
+        <p>Type your code into the editor and press run!</p>
+    </header> 
+    <div class="grid-container">
+        <div class="grid-child">
+            <div class="editor-header">
+                <h1>Editor</h1>
+                <button id="run">Run</button>
+            </div>  
+            <textarea class="codemirror-textarea"></textarea> 
+        </div>
+        <div class="grid-child">
+            <div class="editor-header">
+                <h1>Shell</h1>
+                <button id="clear">Clear</button> 
+            </div>
+            <textarea class="codemirror-textarea"></textarea>  
+        </div>
+    </div>
+    
+</body>
+</html>
